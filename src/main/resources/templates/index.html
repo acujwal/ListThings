@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Home</title>
     <th:block th:insert="base :: header"></th:block>
@@ -15,6 +16,7 @@
             <thead>
                 <tr>
                     <th scope="col">Title</th>
+                    <th scope="col"></th>
                     <th scope="col">Submitted By</th>
                     <th scope="col">Date</th>
                     <th></th>
@@ -27,13 +29,15 @@
                             <span th:text="${listing.title}"></span>
                         </a>
                     </td>
-                    <td th:if="${listing.image != ''}">
-                        <a th:href="@{${listing.url}}" target="_blank">
-                            <img th:src="@{${listing.image}}"/>
-                        </a>
+                    <td>
+                        <div th:if="${listing.image != ''}">
+                            <a th:href="@{${listing.url}}" target="_blank">
+                                <img th:src="@{${listing.image}}"/>
+                            </a>
+                        </div>
                     </td>
                     <td th:text="${listing.user.firstName + ' ' + listing.user.lastName}"></td>
-                    <td><span th:text="${#dates.format(listing.date, 'dd MMM yyyy')}"></span></td>
+                    <td><span th:text="${#dates.format(listing.date, 'MMM dd, yyyy')}"></span></td>
                     <td sec:authorize="isAuthenticated()">
                         <a th:href="@{/update/{id} (id=${listing.id})}">Update</a>
                         <a th:href="@{/delete/{id} (id=${listing.id})}">Delete</a>

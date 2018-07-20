@@ -1,4 +1,4 @@
-package com.example.listthings;
+package com.example.listings;
 import javax.persistence.*;
 import java.util.Collection;
 

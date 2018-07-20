@@ -1,4 +1,4 @@
-package com.example.listthings;
+package com.example.listings;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

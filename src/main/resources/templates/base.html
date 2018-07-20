@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="header">
     <meta charset="UTF-8"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
@@ -13,23 +14,25 @@
 
     <div th:fragment="nav">
         <hr/>
-        <div sec:authorize="isAuthenticated()">
-            <a href="/add">Add New Listing</a><br>
+        <a href="/">Home</a>
+        <span sec:authorize="isAuthenticated()">
+            - Logged in as: <span sec:authentication="name"></span>
 
-            Logged in as: <span sec:authentication="name"></span><br>
+            - <a href="/add">Add New Listing</a>
 
-            <a href="/logout">Logout</a>
-            <div sec:authorize="hasAuthority('ADMIN')">
-                <a href="/showuserprofile" class="badge badge-warning">
-                    <h3><Strong>User List</Strong></h3>
+            - <a href="/logout">Logout</a>
+
+            <span sec:authorize="hasAuthority('ADMIN')">
+                - <a href="/showuserprofile" class="badge badge-warning">
+                    <h5><Strong>User List</Strong></h5>
                 </a>
-            </div>
-        </div>
+            </span>
+        </span>
 
-        <div sec:authorize="!isAuthenticated()">
-            <a href="/login">Login</a>
-            <a href="/register">Signup</a>
-        </div>
+        <span sec:authorize="!isAuthenticated()">
+            - <a href="/login">Login</a>
+            - <a href="/register">Signup</a>
+        </span>
     </div>
 
 </body>

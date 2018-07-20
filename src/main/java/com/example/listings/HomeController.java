@@ -1,20 +1,17 @@
-package com.example.listthings;
+package com.example.listings;
 import com.cloudinary.utils.ObjectUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -37,7 +34,7 @@ public class HomeController {
     @RequestMapping("/")
     public String listMessages(Model model)
     {
-        model.addAttribute("listings", listingRepository.findAllByOrderByDate());
+        model.addAttribute("listings", listingRepository.findAllByOrderByDateDesc());
         return "index";
     }
 
@@ -47,11 +44,6 @@ public class HomeController {
         return "login";
     }
 
-    /**
-     * for new sign up
-     * @param model
-     * @return
-     */
     @GetMapping("/register")
     public String showRegistrationPage(Model model)
     {
@@ -59,13 +51,6 @@ public class HomeController {
         return "registration";
     }
 
-    /**
-     * for new sign up
-     * @param user
-     * @param result
-     * @param model
-     * @return
-     */
     @PostMapping("/register")
     public String processRegistrationPage(@Valid @ModelAttribute User user, BindingResult result, Model model)
     {
@@ -81,11 +66,6 @@ public class HomeController {
         return "redirect:/";
     }
 
-    /**
-     * add new listing
-     * @param model
-     * @return
-     */
     @GetMapping("/add")
     public String addListing(Model model)
     {
@@ -94,11 +74,6 @@ public class HomeController {
         return "form";
     }
 
-    /**
-     * add new message
-     * @param file
-     * @return
-     */
     @PostMapping("/add")
     public String processListing(@ModelAttribute Listing listing, @RequestParam("file") MultipartFile file, @RequestParam("hiddenImgURL") String ImgURL, @RequestParam("user_id") String user_id)
     {
@@ -127,11 +102,6 @@ public class HomeController {
         return "redirect:/";
     }
 
-    /**
-     * @param id
-     * @param model
-     * @return
-     */
     @RequestMapping("/update/{id}")
     public String updateListing(@ModelAttribute Listing listing, @PathVariable
             ("id") long id, Model model)
@@ -141,21 +111,9 @@ public class HomeController {
         model.addAttribute("listing", listingRepository.findById(id));
         model.addAttribute("imageURL", listing.getImage());
 
-        if(listing.getImage().isEmpty()) {
-            model.addAttribute("imageLabel", "Upload Image");
-        }
-        else {
-            model.addAttribute("imageLabel", "Upload New Image");
-        }
-
         return "form";
     }
 
-    /**
-     * delete message by only message owner and admin
-     * @param id
-     * @return
-     */
     @RequestMapping("/delete/{id}")
     public String deleteListing(@PathVariable("id") long id)
     {
@@ -163,11 +121,6 @@ public class HomeController {
         return "redirect:/";
     }
 
-    /**
-     * display all of the users
-     * @param model
-     * @return go to list of users page
-     */
     @RequestMapping("/showuserprofile")
     public String showUserList(Model model)
     {

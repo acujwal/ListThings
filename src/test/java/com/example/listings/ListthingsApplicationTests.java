@@ -1,4 +1,4 @@
-package com.example.listthings;
+package com.example.listings;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
